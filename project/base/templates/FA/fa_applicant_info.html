@@ -9,6 +9,11 @@
         <button class="btn btn-primary">View FA Requirements</button>
       </form>
 
+      <a href = "{% url 'update_fa_record' records.id  %}" class="btn btn-secondary">Update Record</a>
+      <a href="{% url 'delete_applicant_id' records.id 'fa_application' %}" class="btn btn-danger">Delete Application</a>
+
+
+
       <div>
         <a style="display: inline-block;">Student Records</a>
        
