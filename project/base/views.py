@@ -10,6 +10,9 @@ import pandas as pd
 from import_export import resources
 from django.db.models import Q
 
+def test(request):
+    return render(request, 'cms-forms.html')
+
 class CollegeStudentApplicationResource(resources.ModelResource):
     class Meta:
         model = CollegeStudentApplication
