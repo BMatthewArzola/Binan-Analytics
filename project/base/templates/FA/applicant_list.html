@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% load static %}
 
+{% block content %}
   {% if user.is_authenticated %}
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
+
     <div class="d-flex">
       <div class="sidebar">
         {% include 'sidebar_filter.html' %}
       </div>
 
       <div class="main-content flex-grow-1">
-        <h1>Applicant List</h1>
         <div class="d-flex justify-content-end">
           <a href="{% url 'add_fa_applicant' %}" class="btn btn-secondary">Add Applicant</a>
 
@@ -17,20 +19,29 @@
             {% csrf_token %}
             <button type="submit" class="btn btn-secondary">Filter Applicants</button>
           </form>
+
+          <div class="d-flex justify-content-end">
+            <a href="{% url 'fa_passed_applicant' %}" class="btn btn-secondary">Pass List</a>
+  
+            <a href="{% url 'fa_failed_applicant' %}" class="btn btn-secondary">Fail List</a>
+          </div>
         </div>
 
-        {% if records %}
-          <br/>
-          <table class="table table-light table-hover">
-            <thead class="table-dark">
-              <tr>
-                <th scope="col">Control Number</th>
-                <th scope="col">Name</th>
-                <th scope="col">School</th>
-                <th scope="col">Course</th>
-                <th scope="col">Requirements</th>
-              </tr>
-            </thead>
+        <div class="container-fluid custom-container">
+          <div class="box">
+            <h1>Financial Assistance</h1>
+              {% if records %}
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th class="table-header">Control Number</th>
+                      <th class="table-header">Name</th>
+                      <th class="table-header">School</th>
+                      <th class="table-header">Course</th>
+                      <th class="table-header">Requirements</th>
+                    </tr>
+                  </thead>
             
             <tbody>
               {% for applicant_record, requirement_record in records %}
@@ -55,11 +66,7 @@
           </div>
         {% endif %}
         
-        <div class="d-flex justify-content-end">
-          <a href="{% url 'fa_passed_applicant' %}" class="btn btn-secondary">Pass List</a>
-
-          <a href="{% url 'fa_failed_applicant' %}" class="btn btn-secondary">Fail List</a>
-        </div>
+     
       </div>
     </div>
   {% endif %}

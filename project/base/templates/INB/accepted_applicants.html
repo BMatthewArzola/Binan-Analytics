@@ -1,24 +1,29 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% load static %}
 
+{% block content %}
   {% if user.is_authenticated %}
+  <link rel="stylesheet" href="{% static 'css/table.css' %}">
+
     <div class="d-flex">
       <div class="sidebar">
         {% include 'sidebar_filter.html' %}
       </div>
 
       <div class="main-content flex-grow-1">
-        <h1>Passed Applicant </h1>
-
-      {% if applicants %}
-        <table class="table table-light table-hover">
-            <thead class="table-dark">
-                <tr>
-                    <th scope="col">Control Number</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">School</th>
-                    <th scope="col">Course</th>
+        <div class="container-fluid custom-container">
+          <div class="box">
+            <h1>Iskolar ng Bayan</h1>
+              {% if applicants %}
+              <div class="table-container">
+                <table class="table">
+                  <thead>
+                    <tr>
+                    <th class="table-header">Control Number</th>
+                    <th class="table-header">Name</th>
+                    <th class="table-header">School</th>
+                    <th class="table-header">Course</th>
                 </tr>
             </thead>
             <tbody>
