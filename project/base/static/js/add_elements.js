@@ -81,9 +81,8 @@ function makeDraggableAndResizable(el) {
     }
 }
 
-// Function to add a new draggable and resizable text input field
 function addDraggableTextInput() {
-    // Create new elements
+   
     let newItem = document.createElement("div");
     newItem.className = "item";
 
