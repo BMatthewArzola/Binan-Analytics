@@ -69,3 +69,13 @@ tbody tr:last-child {
 tbody tr {
     border-bottom: 1px solid #000000; 
 }
+
+
+/* - - - - - Images(button) - - - - - */
+.img-resize {
+    width: 25px;
+    height: 25px;
+    margin-left: 5px;
+    text-decoration: none;
+}
+
