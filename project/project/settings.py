@@ -81,12 +81,13 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': 'Iskolar_ng_Bayan',
         'USER': 'root',
         'PASSWORD': 'AdminAnalytic01',
         'HOST': 'localhost',
         'PORT': '3306',
+    
     }
 }
 
