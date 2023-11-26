@@ -50,5 +50,10 @@ urlpatterns = [
     path("fa/failed/applicant_info/<str:control_number>/",views.fa_applicant_info,{"status": "failed"},name="fa_failed_applicant_info",),
 
 
-    path("test", views.test, name="forms",)
+    path("test", views.test, name="forms",),
+
+    
+    path("Update_Requirements/", views.update_requirement, name="update_req"),
+    path("Add_IskolarngBayan_Requirement/",views.add_requirement, {"form_type": "inb"}, name="add_inb_requirement",),
+    path("Add_FinancialAssistance_Requirement/",views.add_requirement, {"form_type": "fa"}, name="add_fa_requirement",),
 ]

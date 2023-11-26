@@ -312,6 +312,15 @@ class FinancialAssistanceInfoRepository(models.Model):
 
     def __str__(self):
         return self.fullname
+    
+    #---------------------------------------------------------------
+class INBRequirementRepository(models.Model):
+    id = models.AutoField(primary_key=True)
+    requirement = models.CharField(max_length=500, default='')  
+
+class FARequirementRepository(models.Model):
+    id = models.AutoField(primary_key=True)
+    requirement = models.CharField(max_length=500, default='')  
 
 
     

@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from project.forms import SignUpForm, AddINBForm, ExportForm, ApplicantUploadForm, AddFinancialAssistanceForm
-from .models import CollegeStudentApplication, CollegeRequirements, CollegeStudentAccepted, CollegeStudentRejected, ApplicantInfoRepositoryINB, FinancialAssistanceApplication, FinancialAssistanceRequirement, FinancialAssistanceAccepted, FinancialAssistanceRejected, FinancialAssistanceInfoRepository
+from project.forms import SignUpForm, AddINBForm, ExportForm, ApplicantUploadForm, AddFinancialAssistanceForm, INBRequirementList, FARequirementList
+from .models import CollegeStudentApplication, CollegeRequirements, CollegeStudentAccepted, CollegeStudentRejected, ApplicantInfoRepositoryINB, FinancialAssistanceApplication, FinancialAssistanceRequirement, FinancialAssistanceAccepted, FinancialAssistanceRejected, FinancialAssistanceInfoRepository, INBRequirementRepository, FARequirementRepository
 from django.db.models import Count
 from django.http import HttpResponse
 import csv
@@ -675,3 +675,34 @@ def navbar_user(request):
 
 #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+def update_requirement(request):
+    return render(request, 'Admin/update-requirement.html')
+                  
+def add_requirement(request, form_type):
+    if request.user.is_authenticated:
+        if form_type == 'inb':
+            form = INBRequirementList(request.POST or None)
+            template = 'Admin/inb-requirements.html'
+            model_class = INBRequirementRepository
+            
+        elif form_type == 'fa':
+            form = FARequirementList(request.POST or None)
+            template = 'Admin/fa-requirements.html'
+            model_class = FARequirementRepository
+            
+            
+        else:
+            messages.error(request, "Invalid form type.")
+            return redirect('home')
+
+        if request.method == "POST":
+            if form.is_valid():
+                requirement_data = form.cleaned_data
+                requirement_instance = model_class.objects.create(**requirement_data)
+                messages.success(request, "Requirements Successfully Added")
+                return redirect('update_req')  
+
+        return render(request, template, {'form': form})
+    else:
+        messages.error(request, "You need to be logged in for this process.")
+        return redirect('home')
