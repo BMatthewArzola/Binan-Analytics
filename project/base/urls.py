@@ -51,8 +51,11 @@ urlpatterns = [
 
 
     path("test", views.test, name="forms",),
-
     
+    path("School_List/", views.school_couse_list, name="sc_list",),
+    path("Add_Course/", views.create_school, name="create_school"),
+
+
     path("Update_Requirements/", views.update_requirement, name="update_req"),
     path("Add_IskolarngBayan_Requirement/",views.add_requirement, {"form_type": "inb"}, name="add_inb_requirement",),
     path("Add_FinancialAssistance_Requirement/",views.add_requirement, {"form_type": "fa"}, name="add_fa_requirement",),

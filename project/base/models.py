@@ -313,7 +313,9 @@ class FinancialAssistanceInfoRepository(models.Model):
     def __str__(self):
         return self.fullname
     
-    #---------------------------------------------------------------
+#---------------------------------------------------------------
+#admin 
+
 class INBRequirementRepository(models.Model):
     id = models.AutoField(primary_key=True)
     requirement = models.CharField(max_length=500, default='')  
@@ -323,6 +325,25 @@ class FARequirementRepository(models.Model):
     requirement = models.CharField(max_length=500, default='')  
 
 
+class INBSchool(models.Model):
+    school = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.school
+
+    def save(self, *args, **kwargs):
+        created = not self.pk
+        super().save(*args, **kwargs)
+
+        if created:
+            INBCourse.objects.create(school=self)
+
+class INBCourse(models.Model):
+    course = models.CharField(max_length=100)
+    school = models.ForeignKey(INBSchool, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.course
     
 
    

@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'Iskolar_ng_Bayan',
         'USER': 'root',
         'PASSWORD': 'AdminAnalytic01',

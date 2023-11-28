@@ -1,8 +1,8 @@
 from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from project.forms import SignUpForm, AddINBForm, ExportForm, ApplicantUploadForm, AddFinancialAssistanceForm, INBRequirementList, FARequirementList
-from .models import CollegeStudentApplication, CollegeRequirements, CollegeStudentAccepted, CollegeStudentRejected, ApplicantInfoRepositoryINB, FinancialAssistanceApplication, FinancialAssistanceRequirement, FinancialAssistanceAccepted, FinancialAssistanceRejected, FinancialAssistanceInfoRepository, INBRequirementRepository, FARequirementRepository
+from project.forms import SignUpForm, AddINBForm, ExportForm, ApplicantUploadForm, AddFinancialAssistanceForm, INBRequirementList, FARequirementList, INBSchoolForm, INBCourseForm
+from .models import CollegeStudentApplication, CollegeRequirements, CollegeStudentAccepted, CollegeStudentRejected, ApplicantInfoRepositoryINB, FinancialAssistanceApplication, FinancialAssistanceRequirement, FinancialAssistanceAccepted, FinancialAssistanceRejected, FinancialAssistanceInfoRepository, INBRequirementRepository, FARequirementRepository, INBSchool, INBCourse
 from django.db.models import Count
 from django.http import HttpResponse
 import csv
@@ -706,3 +706,35 @@ def add_requirement(request, form_type):
     else:
         messages.error(request, "You need to be logged in for this process.")
         return redirect('home')
+
+
+
+def school_couse_list(request):
+      
+    schools = INBSchool.objects.all()
+
+    return render(request, 'Admin/list_course_school.html', {'schools': schools})
+  
+
+def create_school(request):
+    if request.method == 'POST':
+        form = INBSchoolForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "School Successfully Added")
+            return redirect('sc_list')  
+    else:
+        form = INBSchoolForm()
+
+    return render(request, 'Admin/list-school-course.html', {'form': form})
+
+def add_course(request):
+    if request.method == 'POST':
+        form = INBCourseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return messages.success(request, "Course Successfully Added")
+    else:
+        form = INBCourseForm()
+
+    return render(request, 'Admin/list-school-course.html', {'form': form})

@@ -1,7 +1,25 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from base.models import CollegeStudentApplication, FinancialAssistanceApplication, INBRequirementRepository, FARequirementRepository
+from base.models import CollegeStudentApplication, FinancialAssistanceApplication, INBRequirementRepository, FARequirementRepository, INBSchool, INBCourse
+
+
+class INBSchoolForm(forms.ModelForm):
+    school = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Add New Requirements", "class": "form-control"}),
+        label=""
+    )
+
+    class Meta:
+        model = INBSchool
+        fields = ['school']
+
+class INBCourseForm(forms.ModelForm):
+    course = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Add New Requirements", "class":"form-control"}), label="")
+    class Meta:
+        model = INBCourse
+        fields = ['course', 'school']
 
 
 class INBRequirementList(forms.Form):
