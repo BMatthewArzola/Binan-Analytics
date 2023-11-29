@@ -4,6 +4,8 @@
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/list_course_school.css' %}">
+<script src="{% static 'js/list_course_school.js' %}"></script>
+
 
 <button class="modal-button" id="openSchoolForm">Add School</button>
 <button class="modal-button" id="openCourseForm">Add Course</button>
@@ -44,9 +46,9 @@
                 <div class = "select-box">
                     <input type = "text" class = "tags_input" name ="tags" hidden/>
                         <div class = "selected-options">
-                            <span class = "tag">Black<span class = "remove-tag"></span></span>
-                            <span class = "tag">Black2<span class = "remove-tag"></span></span>
-                            <span class = "tag">Black3<span class = "remove-tag"></span></span>
+                            <span class = "tag">Black<span class = "remove-tag">&times;</span></span>
+                            <span class = "tag">Green<span class = "remove-tag">&times;</span></span>
+                            <span class = "tag">Navy<span class = "remove-tag">&times;</span></span>
                         </div>
 
                         <div class = "arrow">
@@ -55,15 +57,15 @@
                         
                         <div class="options">
                             <div class = "option-search-tags">
-                                <input type = "text" class = "search-tags" placeholder="Search Tags"/>
+                                <input type = "text" class = "search-tags" placeholder="Search Tags..."/>
                                 <button type = "button" class = "clear"><i class = "fa fa-close"></i></button>
                             </div>
                             <div class = "option all-tags" data-value = "All">Select All</div>
                                 <div class = "option active" data-value = "Black">Black</div>
-                                <div class = "option active" data-value = "Black2">Black2</div>
+                                <div class = "option" data-value = "Black2">Black2</div>
                                 <div class = "option" data-value = "Black3">Black3</div>
-                                <div class = "no-result-message">No result Match</div>
-                            <span class = "tag_error_msg error"> This field is required</span>
+                                <div class = "no-result-message" style="display:none;">No result Match</div>
+                            <span class = "tag_error_msg error"></span>
                             </div>
                             <input type = "button" class = "modal-button" value = "Submit"/>
                         </div>
@@ -98,5 +100,6 @@
         }
     });
 </script>
+
 
 {% endblock %}
