@@ -48,7 +48,8 @@
 
               <tbody>
                 {% for applicant_record, requirement_record in records %}
-                <tr onclick="window.location='{% url 'fa_applicant_info' applicant_record.id %}';" style="cursor: pointer;">
+                <tr onclick="window.location='{% url 'fa_applicant_info' applicant_record.id %}';"
+                  style="cursor: pointer;">
                   <td>{% if requirement_record.requirement == 8 %}
                     Complete
                     {% else %}

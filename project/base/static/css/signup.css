@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Poppins;
+    box-sizing: border-box;
 
 }
 
@@ -21,8 +22,8 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 530px;
-    width: 410px;
+    height: 760px;
+    width: 430px;
     background: #ffff;
     border-radius: 10px;
 
@@ -47,7 +48,7 @@ body {
     font-size: 10;
     font-weight: 500;
     position: relative;
-    top: 30px;
+    top: 20px;
 }
 
 .container img {
@@ -59,17 +60,49 @@ body {
     cursor: pointer;
 }
 
+.container .input-username {
+    position: relative;
+    width: 100%;
+    height: 55px;
+    padding: 5px 0 0 0;
+    margin: 5px 30px;
+}
+
+.container .input-pass {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 57px 0 0 0;
+    margin: 19px 30px;
+}
+
+.input-username p
+{
+    position: relative;
+    left: 10px;
+    font-size: 10px;
+}
+
+.input-box p {
+    position: relative;
+    left: 10px;
+    font-size: 10px;
+}
+
 .container .input-box {
     position: relative;
     width: 100%;
     height: 50px;
-    padding: 5px 0 0 0;
-    margin: 19px 30px;
+    padding: 15px 0 0 0;
+    margin: 6px 30px;
 }
 
-.input-box input {
-    width: 340px;
-    height: 40px;
+.input-box input,
+.input-username input, 
+.input-pass input {
+
+    width: 370px;
+    height: 45px;
     background: #E4E5EB;
     border: none;
     outline: none;
@@ -78,16 +111,8 @@ body {
     font-size: 16px;
     color: #000000;
     padding: 20px 45px 20px 45px;
-    justify-content: space-between;
-}
-
-.input-box i {
-    position: absolute;
-    left: 26px;
-    top: 15px;
-    transform: translate(-50%);
-    font-size: 20px;
-    color: #6D6B6B;
+    
+    justify-items: center;
 }
 
 .container .remember-forget {
@@ -115,9 +140,9 @@ body {
 }
 
 .container .btn {
-    margin-top: 10px;
+    margin-top: 40px;
     margin-left: 30px;
-    width: 340px;
+    width: 370px;
     height: 45px;
     background: #393B40;
     border: none;

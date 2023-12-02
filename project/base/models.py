@@ -312,8 +312,33 @@ class FinancialAssistanceInfoRepository(models.Model):
 
     def __str__(self):
         return self.fullname
+    
+#---------------------------------------------------------------
+#admin 
+
+class INBRequirementRepository(models.Model):
+    id = models.AutoField(primary_key=True)
+    requirement = models.CharField(max_length=500, default='')  
+
+class FARequirementRepository(models.Model):
+    id = models.AutoField(primary_key=True)
+    requirement = models.CharField(max_length=500, default='')  
 
 
+class INBSchool(models.Model):
+    school = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.school
+
+class INBCourse(models.Model):
+    course = models.CharField(max_length=100)
+    acronym = models.CharField(max_length=100, default='')
+    school = models.ManyToManyField(INBSchool)
+    school_id = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.course
     
 
    

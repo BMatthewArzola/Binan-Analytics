@@ -7,6 +7,10 @@ from project.forms import (
     ExportForm,
     ApplicantUploadForm,
     AddFinancialAssistanceForm,
+    INBRequirementList,
+    FARequirementList,
+    INBSchoolForm,
+    INBCourseForm,
 )
 from .models import (
     CollegeStudentApplication,
@@ -19,6 +23,10 @@ from .models import (
     FinancialAssistanceAccepted,
     FinancialAssistanceRejected,
     FinancialAssistanceInfoRepository,
+    INBRequirementRepository,
+    FARequirementRepository,
+    INBSchool,
+    INBCourse,
 )
 from django.db.models import Count
 from django.http import HttpResponse
@@ -26,10 +34,7 @@ import csv
 import pandas as pd
 from import_export import resources
 from django.db.models import Q
-
-
-def test(request):
-    return render(request, "cms-forms.html")
+import json
 
 
 class CollegeStudentApplicationResource(resources.ModelResource):
@@ -44,6 +49,10 @@ def home(request):
 
 # import ----------------------------------------------------------------------------------------------------------------------------------
 # problem fk nan&update
+from django.db import IntegrityError
+from django.contrib import messages
+
+
 def import_excel(request):
     if request.method == "POST":
         form = ApplicantUploadForm(request.POST, request.FILES)
@@ -53,47 +62,57 @@ def import_excel(request):
             applicant_count = 0
 
             for index, row in df.iterrows():
-                applicant = CollegeStudentApplication(
-                    control_number=row["Control Number"],
-                    last_name=row["Surname"],
-                    first_name=row["Firstname"],
-                    middle_name=row["Middlename"],
-                    address=row["Address"],
-                    gender=row["Gender"],
-                    date_of_birth=row["Date of Birth"],
-                    place_of_birth=row["Place of Birth"],
-                    contact_no=row["Contact No."],
-                    email_address=row["Email Address"],
-                    school=row["Preferred School"],
-                    course=row["Desired Course"],
-                    gwa=row["GWA"],
-                    rank=row["Rank"],
-                    jhs=row["JHS"],
-                    jhs_address=row["JHS Address"],
-                    jhs_educational_provider=row["JHS Education Provider"],
-                    shs=row["SHS"],
-                    shs_address=row["SHS Address"],
-                    shs_educational_provider=row["SHS Education Provider"],
-                    father_name=row["Father Name"],
-                    father_voter_status=row["Father Voter Status"],
-                    father_educational_attainment=row["Father Educational Attainment"],
-                    father_employer=row["Father Employer"],
-                    father_occupation=row["Father Occupation"],
-                    mother_name=row["Mother Name"],
-                    mother_voter_status=row["Mother Voter Status"],
-                    mother_educational_attainment=row["Mother Educational Attainment"],
-                    mother_employer=row["Mother Employer"],
-                    mother_occupation=row["Mother Occupation"],
-                    guardian_name=row["Legal Guardian"],
-                    guardian_voter_status=row["Guardian Voter Status"],
-                    guardian_educational_attainment=row[
-                        "Guardian Educational Attainment"
-                    ],
-                    guardian_employer=row["Guardian Employer"],
-                    guardian_occupation=row["Guardian Occupation"],
-                )
-                applicant.save()
-                applicant_count += 1
+                try:
+                    applicant = CollegeStudentApplication(
+                        control_number=row["Control Number"],
+                        last_name=row["Surname"],
+                        first_name=row["Firstname"],
+                        middle_name=row["Middlename"],
+                        address=row["Address"],
+                        gender=row["Gender"],
+                        date_of_birth=row["Date of Birth"],
+                        place_of_birth=row["Place of Birth"],
+                        contact_no=row["Contact No."],
+                        email_address=row["Email Address"],
+                        school=row["Preferred School"],
+                        course=row["Desired Course"],
+                        gwa=row["GWA"],
+                        rank=row["Rank"],
+                        jhs=row["JHS"],
+                        jhs_address=row["JHS Address"],
+                        jhs_educational_provider=row["JHS Education Provider"],
+                        shs=row["SHS"],
+                        shs_address=row["SHS Address"],
+                        shs_educational_provider=row["SHS Education Provider"],
+                        father_name=row["Father Name"],
+                        father_voter_status=row["Father Voter Status"],
+                        father_educational_attainment=row[
+                            "Father Educational Attainment"
+                        ],
+                        father_employer=row["Father Employer"],
+                        father_occupation=row["Father Occupation"],
+                        mother_name=row["Mother Name"],
+                        mother_voter_status=row["Mother Voter Status"],
+                        mother_educational_attainment=row[
+                            "Mother Educational Attainment"
+                        ],
+                        mother_employer=row["Mother Employer"],
+                        mother_occupation=row["Mother Occupation"],
+                        guardian_name=row["Legal Guardian"],
+                        guardian_voter_status=row["Guardian Voter Status"],
+                        guardian_educational_attainment=row[
+                            "Guardian Educational Attainment"
+                        ],
+                        guardian_employer=row["Guardian Employer"],
+                        guardian_occupation=row["Guardian Occupation"],
+                    )
+                    applicant.save()
+                    applicant_count += 1
+                except IntegrityError:
+                    messages.warning(
+                        request,
+                        f'Duplicate entry found for {row["Control Number"]}. Skipped.',
+                    )
 
             messages.success(
                 request, f"{applicant_count} applicant(s) imported successfully."
@@ -834,5 +853,107 @@ def navbar_user(request):
 # ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-def offers(request):
-    return render(request, "Admin/list_course_school.html")
+def update_requirement(request):
+    return render(request, "Admin/update-requirement.html")
+
+
+def add_requirement(request, form_type):
+    if request.user.is_authenticated:
+        if form_type == "inb":
+            form = INBRequirementList(request.POST or None)
+            template = "Admin/inb-requirements.html"
+            model_class = INBRequirementRepository
+
+        elif form_type == "fa":
+            form = FARequirementList(request.POST or None)
+            template = "Admin/fa-requirements.html"
+            model_class = FARequirementRepository
+
+        else:
+            messages.error(request, "Invalid form type.")
+            return redirect("home")
+
+        if request.method == "POST":
+            if form.is_valid():
+                requirement_data = form.cleaned_data
+                requirement_instance = model_class.objects.create(**requirement_data)
+                messages.success(request, "Requirements Successfully Added")
+                return redirect("update_req")
+
+        return render(request, template, {"form": form})
+    else:
+        messages.error(request, "You need to be logged in for this process.")
+        return redirect("home")
+
+
+def school_course_list(request):
+    schools_with_courses = INBSchool.objects.prefetch_related("inbcourse_set").all()
+    schools = INBSchool.objects.all()
+
+    return render(
+        request,
+        "Admin/list_course_school.html",
+        {
+            "schools_with_courses": schools_with_courses,
+            "schools": schools,
+        },
+    )
+
+
+def create_school(request):
+    if request.method == "POST":
+        form = INBSchoolForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "School Successfully Added")
+            return redirect("sc_list")
+    else:
+        form = INBSchoolForm()
+
+    return render(request, "Admin/list-school-course.html", {"school_form": form})
+
+
+def add_course(request):
+    if request.method == "POST":
+        form = INBCourseForm(request.POST)
+        if form.is_valid():
+            course_instance = form.save(commit=False)
+
+            selected_schools = request.POST.getlist("schools")
+
+            print("Selected Schools:", selected_schools)
+
+            associated_schools = []
+
+            for school_id in selected_schools:
+                school = get_object_or_404(INBSchool, pk=school_id)
+                associated_schools.append(school)
+
+            course_instance.save()
+            course_instance.school.set(associated_schools)
+
+            if selected_schools:
+                course_instance.school_id = selected_schools[0]
+                course_instance.save()
+
+            messages.success(request, "Course Successfully Added")
+            return redirect("sc_list")
+    else:
+        form = INBCourseForm()
+
+    schools = INBSchool.objects.all()
+    return render(
+        request,
+        "Admin/list_course_school.html",
+        {"course_form": form, "schools": schools},
+    )
+
+
+def test1(request):
+    return render(request, "cms-forms.html")
+
+
+def test2(request):
+    schools = INBSchool.objects.all()
+
+    return render(request, "test-template.html", {"schools": schools})

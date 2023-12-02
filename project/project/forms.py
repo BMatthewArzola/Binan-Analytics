@@ -1,7 +1,38 @@
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from base.models import CollegeStudentApplication, FinancialAssistanceApplication
+from base.models import CollegeStudentApplication, FinancialAssistanceApplication, INBRequirementRepository, FARequirementRepository, INBSchool, INBCourse
+
+
+class INBSchoolForm(forms.ModelForm):
+    school = forms.CharField(
+        required=True,
+        widget=forms.TextInput(attrs={"placeholder": "Add New Requirements", "class": "form-control"}),
+        label=""
+    )
+
+    class Meta:
+        model = INBSchool
+        fields = ['school']
+
+class INBCourseForm(forms.ModelForm):
+    class Meta:
+            model = INBCourse
+            fields = ['course', 'acronym', 'school_id']
+
+
+class INBRequirementList(forms.Form):
+    requirement = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Add New Requirements", "class":"form-control"}), label="")
+class Meta:
+            model = INBRequirementRepository
+            fields = ['requirement']
+
+
+class FARequirementList(forms.Form):
+    requirement = forms.CharField(required=True, widget=forms.widgets.TextInput(attrs={"placeholder":"Add New Requirements", "class":"form-control"}), label="")
+class Meta:
+            model = FARequirementRepository
+            fields = ['requirement']
 
 class ApplicantUploadForm(forms.Form):
     file = forms.FileField()

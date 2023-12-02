@@ -47,7 +47,7 @@ body {
     margin-bottom: 5px;
     position: relative;
 
-    background: #D3BD8F;
+    background: #cdcdcd;
     border-radius: 3px;
 
     z-index: 1;
@@ -71,7 +71,7 @@ body {
 #menuToggle input:checked~span {
     opacity: 1;
     transform: rotate(45deg) translate(-2px, -1px);
-    background: #D3BD8F;
+    background: #232323;
 }
 
 #menuToggle input:checked~span:nth-last-child(3) {
@@ -91,7 +91,7 @@ body {
     margin: -100px 0 0 -50px;
     padding: 50px;
     padding-top: 125px;
-    background: #1C469A;
+    background: transparent;
     list-style-type: none;
     -webkit-font-smoothing: antialiased;
     transform-origin: 0% 0%;
