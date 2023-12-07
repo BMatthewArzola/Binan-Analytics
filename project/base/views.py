@@ -443,7 +443,9 @@ def view_applicant_table(request):
         )
 
         requirement_records = CollegeRequirements.objects.all()
-
+        
+        form = AddINBForm(request.POST or None)
+   
     if not request.session.get("login_message_displayed", False):
         messages.success(request, "You have logged in successfully!")
         request.session["login_message_displayed"] = True
@@ -451,7 +453,7 @@ def view_applicant_table(request):
     return render(
         request,
         "INB/applicant_list.html",
-        {"records": zip(filtered_applicants, requirement_records)},
+        {"records": zip(filtered_applicants, requirement_records), "form": form},
     )
 
 

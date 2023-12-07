@@ -6,6 +6,8 @@
 {% if user.is_authenticated %}
 <link rel="stylesheet" href="{% static 'css/table.css' %}">
 
+<link rel="stylesheet" href="{% static 'css/modals.css' %}">
+
 <div class="container">
   <div class="d-flex">
     <div class="sidebar">
@@ -18,7 +20,14 @@
         <h1>Iskolar ng Bayan</h1>
         <div class="box">
 
+
+
+
           <div>
+
+            <button class="modal-button" id="openSchoolForm">Add School</button>
+
+
             <a href="{% url 'add_inb_applicant' %}">
               <img src="{% static 'images/add.png' %}" class="img-resize">
             </a>
@@ -76,4 +85,22 @@
   </div>
 </div>
 {% endif %}
+
+
+
+<div id="schoolFormContainer" class="modal-container">
+
+  <div class="modal-box">
+
+    {% include 'INB/add_record.html' %}
+
+  </div>
+
+</div>
+
+
+
+
+<script src="{% static 'js/modals.js' %}"></script>
+
 {% endblock %}
