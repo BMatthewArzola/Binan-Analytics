@@ -16,11 +16,11 @@
 
     <div id="menuToggle">
 
-          <input type="checkbox" />
-          <span></span>
-          <span></span>
-          <span></span>
-      
+      <input type="checkbox" />
+      <span></span>
+      <span></span>
+      <span></span>
+
       <ul id="menu">
         <a href="#">
           <li>Dashboard</li>
@@ -31,7 +31,7 @@
         <a href="#">
           <li>Financial Assistance</li>
         </a>
-       
+
       </ul>
     </div>
 
@@ -53,34 +53,34 @@
       <img src="{% static 'images/profile.png' %}" class="user-pic" onclick="toggleMenu()">
 
       <div class="sub-menu-wrap" id="subMenu">
-          <div class="sub-menu">
-            <div class="user-info">
-              <img src="{% static 'images/profile.png' %}" class="user-pic">
-              <h4>{{ user.first_name }}, {{ user.last_name }}</h4>
-            </div>
-            <hr>
-          
-            <a href="#" class="sub-menu-link">
-              <img src="{% static 'images/profile.png' %}">
-              <p>Edit Profile</p>
-            </a>
-          
-            <a href="#" class="sub-menu-link">
-              <img src="{% static 'images/help.png' %}">
-              <p>Help</p>
-            </a>
-          
-            <a href="#" class="sub-menu-link">
-              <img src="{% static 'images/setting.png' %}">
-              <p>Settings</p>
-            </a>
-          
-            <a class="sub-menu-link" href="{% url 'logout' %}">
-              <img src="{% static 'images/logout.png' %}">
-              <p>Logout</p>
-            </a>
-          
+        <div class="sub-menu">
+          <div class="user-info">
+            <img src="{% static 'images/profile.png' %}" class="user-pic">
+            <h4>{{ user.first_name }}, {{ user.last_name }}</h4>
           </div>
+          <hr>
+
+          <a href="#" class="sub-menu-link">
+            <img src="{% static 'images/profile.png' %}">
+            <p>Edit Profile</p>
+          </a>
+
+          <a href="#" class="sub-menu-link">
+            <img src="{% static 'images/help.png' %}">
+            <p>Help</p>
+          </a>
+
+          <a href="{% url 'settings' %}" class="sub-menu-link">
+            <img src="{% static 'images/setting.png' %}">
+            <p>Settings</p>
+          </a>
+
+          <a class="sub-menu-link" href="{% url 'logout' %}">
+            <img src="{% static 'images/logout.png' %}">
+            <p>Logout</p>
+          </a>
+
+        </div>
       </div>
 
       {% else %}

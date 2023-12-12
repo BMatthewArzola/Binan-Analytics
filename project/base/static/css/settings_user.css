@@ -1,0 +1,186 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  box-sizing: border-box;
+}
+
+.settings-body {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 100px;
+  overflow: hidden;
+}
+
+.container-settings {
+  display: flex;
+  box-shadow: 0px 0px 15px 2px #1f1f1f5e;
+  overflow: hidden;
+}
+
+.main-content {
+  overflow: hidden;
+}
+
+.aside-element {
+  width: 200px;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: #1c469a;
+}
+.navbar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  height: 90%;
+}
+
+.nav-element {
+  width: 100%;
+  text-align: center;
+
+  margin-left: 0;
+
+  color: black;
+}
+li {
+  position: relative;
+
+  list-style: none;
+  padding: 15px 10px;
+
+  letter-spacing: 0px;
+
+  cursor: pointer;
+
+  transition: all 300ms ease-in-out;
+  transform: translateY(0px);
+}
+
+/*something to do with the card*/
+.card {
+  height: 500px;
+  padding: 30px;
+  display: none;
+  width: calc(90vw - 500px);
+  color: black;
+  transform: translateX(-100%);
+}
+.card.active {
+  display: block;
+  animation: slide 500ms ease-in-out both;
+}
+.card .title {
+  font-size: 2rem;
+  border-bottom: 1px solid black;
+}
+.card .content {
+  font-size: 10;
+
+  margin-left: 50px;
+}
+
+.selectedLink {
+  color: white;
+  font-weight: 600;
+}
+@keyframes slide {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0%);
+    opacity: 1;
+  }
+}
+
+/*account settings part*/
+
+.content-combo {
+  display: flex;
+  align-items: center;
+
+  margin: 0 0 30px 0; /* Adjust the margin to reduce the vertical gap */
+}
+
+.content-combo label {
+  width: 100px; /* Adjust the width based on your preference */
+}
+
+.content-combo input {
+  width: 30vw;
+  height: 4vh;
+
+  border-radius: 25px;
+  padding: 0 10px;
+}
+
+.content-button {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap based on your design */
+
+  justify-content: right;
+
+  margin-top: 0;
+}
+
+.content-button input[type="button"] {
+  border-radius: 95px; /* Adjust the value to control the roundness */
+  height: 35px;
+  width: 70px; /* Adjust the value to set the desired width */
+  padding: 0 8px; /* Optional: Add padding for better visual appearance */
+  background-color: #1c469a; /* Set the background color to #1C469A */
+  color: #fff; /* Set text color to white for better visibility */
+  border: none; /* Remove default button border */
+}
+
+.content-button input[type="button"][value="Cancel"] {
+  background-color: gray; /* Set the background color to gray */
+  color: #fff; /* Set text color to black for better visibility */
+  /* You can customize other styles for the "Cancel" button here */
+}
+
+.content-combo input[type="email"]:invalid {
+  border: 2px solid #ff0000; /* Add a red border for visual emphasis */
+  position: relative;
+}
+
+/* CSS for the content-combo class */
+.content-combo-checkbox {
+  margin-bottom: 15px;
+}
+
+/* CSS to style the label and checkbox */
+.content-combo-checkbox label {
+  display: inline-block;
+}
+
+.content-combo-checkbox input[type="checkbox"] {
+  /* Add your desired styles for the checkbox here */
+  /* For example: */
+  width: 25px;
+  height: 25px;
+  border: 3px solid #ccc;
+  border-radius: 3px;
+  vertical-align: middle; /* Align the checkbox with the text */
+
+  margin-right: 10px;
+
+  margin-left: 30px;
+}
+
+/* CSS for the text above the checkbox */
+.checkbox-section-headers {
+  display: block;
+  font-weight: bold;
+}
